@@ -251,45 +251,16 @@ const observer = new IntersectionObserver((entries, observer) => {
 });
 
 observer.observe(section);
-//new------------------------------
-// Select the audio element and the "about" section
-const audio2 = document.getElementById("section-audio");
-const section1 = document.getElementById("about");
 
-// Ensure the audio element and section exist before proceeding
-if (audio2 && section1) {
-  // Create an IntersectionObserver to handle when the section is in/out of view
-  const observer = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        if (!entry.isIntersecting) {
-          // Stop the audio when the section goes out of view
-          if (!audio2.paused) {
-            audio2.pause();
-          }
-        }
-      });
-    },
-    { threshold: [0.5] } // Trigger when 50% of the section is visible
-  );
-
-  // Start observing the section
-  observer.observe(section1);
-
-  // Add a click event listener to the "about" section
-  section.addEventListener("click", () => {
-    // Play the audio when the section is clicked
-    if (audio2.paused) {
-      audio2.currentTime = 0; // Restart the audio
-      audio2.play().catch((err) => {
-        console.error("Failed to play audio:", err);
-      });
-    }
-  });
-
-  // Clean up the observer on page unload
-  window.addEventListener("beforeunload", () => observer.disconnect());
-} else {
-  console.error("Audio or section element not found.");
+function playAudio() {
+  audio = document.getElementById('myAudio');
+  audio1.play();
+  if (entry.isIntersecting) {
+    // When the section comes into view, play the audio
+    audio1.currentTime = 0; // Restart the audio if it's already playing
+    audio1.play();
+  } else {
+    // Optionally stop the audio when the section goes out of view
+    audio1.pause();
+  }
 }
-
