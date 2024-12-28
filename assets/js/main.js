@@ -230,8 +230,7 @@ const image = document.getElementById("hover-image");//vijay audio
     audio.currentTime = 0; // Reset audio to the beginning
   });
 
- // Select the audio element and the target section
-const audio1 = document.getElementById("section-audio"); // Planning audio
+ // Select the audio element and the target sectionconst audio1 = document.getElementById("section-audio"); // Planning audio
 const section = document.getElementById("about");
 
 // Create an IntersectionObserver to detect when the section enters the viewport
@@ -239,7 +238,7 @@ const observer = new IntersectionObserver((entries, observer) => {
   entries.forEach(entry => {
     if (entry.isIntersecting) {
       // When the section comes into view, play the audio
-      if (audio1.paused) {
+      if (!audio1.playing) {
         audio1.currentTime = 0; // Restart the audio if it's already playing
         audio1.play().catch((err) => {
           console.error('Audio play failed:', err);
@@ -259,12 +258,19 @@ const observer = new IntersectionObserver((entries, observer) => {
 observer.observe(section);
 
 // Ensure audio only plays after user interaction (for mobile compatibility)
-document.addEventListener('touchstart', () => {
-  // Check if the audio is ready to play, otherwise wait for interaction
-  if (audio1.paused) {
-    audio1.play().catch((err) => {
-      console.error('Audio play failed on touchstart:', err);
-    });
-  }
-}, { once: true });
+let userInteracted = false;
 
+// Listen for user interactions like touchstart or mouse events
+document.addEventListener('touchstart', handleUserInteraction, { once: true });
+document.addEventListener('click', handleUserInteraction, { once: true });
+
+function handleUserInteraction() {
+  if (!userInteracted) {
+    userInteracted = true;
+    if (audio1.paused) {
+      audio1.play().catch((err) => {
+        console.error('Audio play failed on user interaction:', err);
+      });
+    }
+  }
+}
