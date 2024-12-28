@@ -231,24 +231,44 @@ const image = document.getElementById("hover-image");//vijay audio
   });
 
   // Select the audio element and the target section
-const audio1 = document.getElementById("section-audio");//planning
+// Select the audio element and section to observe
+const audio1 = document.getElementById("section-audio");
 const section = document.getElementById("about");
 
-// Create an IntersectionObserver to detect when the section enters the viewport
-const observer = new IntersectionObserver((entries, observer) => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      // When the section comes into view, play the audio
-      audio1.currentTime = 0; // Restart the audio if it's already playing
-      audio1.play();
-    } else {
-      // Optionally stop the audio when the section goes out of view
-      audio1.pause();
+// Ensure the audio element is loaded before attempting to control it
+if (audio1 && section) {
+  // Create an IntersectionObserver with optimized settings
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          // Play the audio only if it isn't already playing
+          if (audio1.paused) {
+            audio1.currentTime = 0; // Restart the audio
+            audio1.play().catch((err) => {
+              console.error("Failed to play audio:", err);
+            });
+          }
+        } else {
+          // Pause the audio only if it's currently playing
+          if (!audio1.paused) {
+            audio1.pause();
+          }
+        }
+      });
+    },
+    {
+      threshold: [0.5], // Trigger when 50% of the section is visible
     }
-  });
-}, {
-  threshold: 0.5 // 50% of the section needs to be visible
-});
+  );
 
-observer.observe(section);
+  // Start observing the target section
+  observer.observe(section);
+
+  // Add cleanup to disconnect the observer when it's no longer needed
+  window.addEventListener("beforeunload", () => observer.disconnect());
+} else {
+  console.error("Audio or section element not found.");
+}
+
 
