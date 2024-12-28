@@ -230,20 +230,31 @@ const image = document.getElementById("hover-image");//vijay audio
     audio.currentTime = 0; // Reset audio to the beginning
   });
 
-  const read = document.getElementById("read");//vijay audio
-  const audio1 = document.getElementById("section-audio");
-  
-  read.addEventListener("mouseenter", () => {
-    audio1.currentTime = 0; // Restart the audio
-    audio1.play();
-  });
-  
-  read.addEventListener("mouseleave", () => {
-    audio1.pause();
-    audio1.currentTime = 0; // Reset audio to the beginning
+  const audio1 = document.getElementById('section-audio');
+
+  // Play audio on icon-box click
+  document.querySelectorAll('.about .icon-box').forEach(function(iconBox) {
+    iconBox.addEventListener('click', function() {
+      audio1.play();
+    });
   });
 
+  // Stop audio when scrolling out of the .about section
+  function checkSectionInView() {
+    const section = document.querySelector('.about');
+    const rect = section.getBoundingClientRect();
 
+    // If the section is not in view, pause the audio
+    if (rect.top > window.innerHeight || rect.bottom < 0) {
+      audio1.pause();
+    }
+  }
+
+  // Listen for scroll events
+  window.addEventListener('scroll', checkSectionInView);
+
+  // Also check when the page loads in case the section is already off-screen
+  checkSectionInView();
 
 
 
