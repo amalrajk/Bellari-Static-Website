@@ -256,5 +256,17 @@ const image = document.getElementById("hover-image");//vijay audio
   // Also check when the page loads in case the section is already off-screen
   checkSectionInView();
 
+  const image3 = document.getElementById("img-fluid1");//vijay audio
+  const audio3 = document.getElementById("pulsar");
+  
+  image3.addEventListener("mouseenter", () => {
+    audio3.currentTime = 0; // Restart the audio
+    audio3.play();
+  });
+  
+  image3.addEventListener("mouseleave", () => {
+    audio3.pause();
+    audio3.currentTime = 0; // Reset audio to the beginning
+  });
 
 
