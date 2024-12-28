@@ -232,7 +232,7 @@ const image = document.getElementById("hover-image");//vijay audio
 
  // Select the audio element and the target sectionconst audio1 = document.getElementById("section-audio"); // Planning audio
 const section = document.getElementById("about");
-
+const audio1 = document.getElementById("section-audio");
 // Create an IntersectionObserver to detect when the section enters the viewport
 const observer = new IntersectionObserver((entries, observer) => {
   entries.forEach(entry => {
@@ -253,24 +253,6 @@ const observer = new IntersectionObserver((entries, observer) => {
 }, {
   threshold: 0.5 // 50% of the section needs to be visible
 });
-
-// Attach the observer to the target section
 observer.observe(section);
 
-// Ensure audio only plays after user interaction (for mobile compatibility)
-let userInteracted = false;
 
-// Listen for user interactions like touchstart or mouse events
-document.addEventListener('touchstart', handleUserInteraction, { once: true });
-document.addEventListener('click', handleUserInteraction, { once: true });
-
-function handleUserInteraction() {
-  if (!userInteracted) {
-    userInteracted = true;
-    if (audio1.paused) {
-      audio1.play().catch((err) => {
-        console.error('Audio play failed on user interaction:', err);
-      });
-    }
-  }
-}
