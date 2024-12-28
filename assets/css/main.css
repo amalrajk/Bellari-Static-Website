@@ -2864,7 +2864,7 @@ section,
 }
 .justify-text {
   text-align: justify; /* Justify the text */
-  text-align-last: justify; /* Justify the last line as well */
+  /* Justify the last line as well */
 }
 .row1 {
   display: flex;
