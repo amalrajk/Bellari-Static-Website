@@ -253,8 +253,8 @@ const observer = new IntersectionObserver((entries, observer) => {
 observer.observe(section);
 
 function playAudio() {
-  audio = document.getElementById('myAudio');
-  audio1.play();
+  //audio1 = document.getElementById('myAudio');
+ 
   if (entry.isIntersecting) {
     // When the section comes into view, play the audio
     audio1.currentTime = 0; // Restart the audio if it's already playing
