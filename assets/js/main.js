@@ -230,29 +230,20 @@ const image = document.getElementById("hover-image");//vijay audio
     audio.currentTime = 0; // Reset audio to the beginning
   });
 
- // Select the audio element and the target sectionconst audio1 = document.getElementById("section-audio"); // Planning audio
-const section = document.getElementById("about");
-const audio1 = document.getElementById("section-audio");
-// Create an IntersectionObserver to detect when the section enters the viewport
-const observer = new IntersectionObserver((entries, observer) => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      // When the section comes into view, play the audio
-      if (!audio1.playing) {
-        audio1.currentTime = 0; // Restart the audio if it's already playing
-        audio1.play().catch((err) => {
-          console.error('Audio play failed:', err);
-          // You can handle play failure gracefully here (like asking user to interact)
-        });
-      }
-    } else {
-      // Optionally stop the audio when the section goes out of view
-      audio1.pause();
-    }
+  const read = document.getElementById("read");//vijay audio
+  const audio1 = document.getElementById("section-audio");
+  
+  read.addEventListener("mouseenter", () => {
+    audio1.currentTime = 0; // Restart the audio
+    audio1.play();
   });
-}, {
-  threshold: 0.1 // 50% of the section needs to be visible
-});
-observer.observe(section);
+  
+  read.addEventListener("mouseleave", () => {
+    audio1.pause();
+    audio1.currentTime = 0; // Reset audio to the beginning
+  });
+
+
+
 
 
